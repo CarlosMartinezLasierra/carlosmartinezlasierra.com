@@ -1,0 +1,249 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   DESIGN SYSTEM: "Grain & Glow" — Carlos Martínez Lasierra Portfolio
+   Philosophy: Dark canvas with photographic grain texture.
+   Colors emerge from darkness like bioluminescent light.
+   Each category has its own chromatic identity.
+   Typography: Space Grotesk (display) + DM Sans (body)
+   ============================================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* === DARK BASE PALETTE === */
+  --background: oklch(0.08 0.005 260);
+  --foreground: oklch(0.95 0.005 60);
+  --card: oklch(0.12 0.006 260);
+  --card-foreground: oklch(0.92 0.005 60);
+  --popover: oklch(0.10 0.006 260);
+  --popover-foreground: oklch(0.92 0.005 60);
+  --muted: oklch(0.16 0.006 260);
+  --muted-foreground: oklch(0.55 0.01 260);
+  --border: oklch(0.22 0.008 260);
+  --input: oklch(0.18 0.006 260);
+  --ring: oklch(0.65 0.18 50);
+
+  /* === PRIMARY: Warm Orange === */
+  --primary: oklch(0.72 0.18 50);
+  --primary-foreground: oklch(0.08 0.005 260);
+
+  /* === SECONDARY === */
+  --secondary: oklch(0.18 0.008 260);
+  --secondary-foreground: oklch(0.85 0.005 60);
+
+  /* === ACCENT === */
+  --accent: oklch(0.20 0.008 260);
+  --accent-foreground: oklch(0.92 0.005 60);
+
+  /* === DESTRUCTIVE === */
+  --destructive: oklch(0.60 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* === CATEGORY COLORS (used for dynamic bg transitions) === */
+  --color-entrepreneurship: oklch(0.70 0.18 50);      /* Orange */
+  --color-marketing: oklch(0.65 0.22 25);              /* Coral Red */
+  --color-ai: oklch(0.60 0.20 300);                    /* Violet */
+  --color-webdev: oklch(0.62 0.18 230);                /* Electric Blue */
+  --color-design: oklch(0.68 0.16 195);                /* Cyan */
+  --color-content: oklch(0.65 0.18 145);               /* Lime Green */
+  --color-experience: oklch(0.68 0.16 75);             /* Amber */
+
+  /* === GLOW COLORS (more saturated for glow effects) === */
+  --glow-orange: #FF6B35;
+  --glow-coral: #E63946;
+  --glow-violet: #7B2FBE;
+  --glow-blue: #2196F3;
+  --glow-cyan: #00BCD4;
+  --glow-green: #4CAF50;
+  --glow-amber: #FF9800;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    /* Grain texture overlay via pseudo-element on body */
+    position: relative;
+  }
+
+  /* === GRAIN TEXTURE OVERLAY === */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+      max-width: 1400px;
+    }
+  }
+
+  /* === SKILL PILL === */
+  .skill-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+    cursor: default;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  /* === SECTION TRANSITION === */
+  .section-bg-transition {
+    transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* === GLOW TEXT === */
+  .glow-text {
+    text-shadow: 0 0 40px currentColor;
+  }
+
+  /* === DOTTED BORDER (Skylrk style) === */
+  .dotted-border-hover {
+    position: relative;
+  }
+
+  .dotted-border-hover::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1.5px dashed transparent;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+    pointer-events: none;
+  }
+
+  .dotted-border-hover:hover::after {
+    border-color: currentColor;
+  }
+
+  /* === DISPLAY TITLE === */
+  .display-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+
+  /* === MONO LABEL === */
+  .mono-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.08 0.005 260);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.30 0.01 260);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.72 0.18 50);
+}
+
+/* === SELECTION === */
+::selection {
+  background: oklch(0.72 0.18 50 / 0.3);
+  color: oklch(0.95 0.005 60);
+}
